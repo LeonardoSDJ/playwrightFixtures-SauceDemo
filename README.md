@@ -261,4 +261,3 @@ A suite de testes utiliza Allure para relatórios abrangentes:
 - Parâmetros de teste são documentados
 
 </div>
-```
