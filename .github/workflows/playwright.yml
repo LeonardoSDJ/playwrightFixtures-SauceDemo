@@ -19,6 +19,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Generate Visual Test Snapshots
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npx playwright test --update-snapshots
       - name: Run Playwright tests
         run: xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npx playwright test
       - name: Generate Allure Report
@@ -37,4 +39,11 @@ jobs:
         with:
           name: allure-report
           path: allure-report/
+          retention-days: 7
+      - name: Upload Test Snapshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-snapshots
+          path: tests/**/*-snapshots/
           retention-days: 7
