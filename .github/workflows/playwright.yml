@@ -22,7 +22,12 @@ jobs:
       - name: Generate Visual Test Snapshots
         run: xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npx playwright test --update-snapshots
       - name: Run Playwright tests
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npx playwright test
+        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x720x24" npx playwright test --reporter=html
+      - name: Ensure report directories exist
+        if: always()
+        run: |
+          mkdir -p playwright-report
+          mkdir -p allure-report
       - name: Generate Allure Report
         if: always()
         run: npm run report:ci
